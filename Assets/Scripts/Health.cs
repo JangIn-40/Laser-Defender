@@ -17,12 +17,14 @@ public class Health : MonoBehaviour
     CameraShake cameraShake;
     AudioPlayer audioPlayer;
     ScoreKeeper scoreKeeper;
+    LevelManager levelManager;
 
     void Awake()
     {
         cameraShake = Camera.main.GetComponent<CameraShake>();
         audioPlayer = FindObjectOfType<AudioPlayer>();
         scoreKeeper = FindObjectOfType<ScoreKeeper>();
+        levelManager = FindObjectOfType<LevelManager>();
     }
 
     public int GetHealth()
@@ -60,6 +62,11 @@ public class Health : MonoBehaviour
         {
             scoreKeeper.AddScore(score);
         }
+        else
+        {
+            levelManager.LoadGameOver();
+        }
+
         //무언가 할게 있다면 Destroy전에 해주자!
         Destroy(gameObject);
     }
@@ -78,7 +85,6 @@ public class Health : MonoBehaviour
         if(cameraShake != null && applyCameraShake)
         {
             cameraShake.Play();
-            Debug.Log("카메라 흔들기");
         }
     }
 }
